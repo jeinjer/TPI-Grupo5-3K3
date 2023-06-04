@@ -1,12 +1,13 @@
 {
-  "name": "tp_dds_redux",
+  "name": "tpi_grupo5_3k3-1",
   "version": "1.0.0",
-  "description": "tp dds panaderia",
+  "description": "tpi backend",
   "main": "index.js",
   "scripts": {
-    "test": "jest --testTimeout = 10000"
+    "test": "jest",
+    "dev": "nodemon index.js"
   },
-  "author": "Gianfranco Tommasi",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "aa-sqlite": "^1.0.29",
@@ -15,6 +16,7 @@
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
+    "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
   }
 }

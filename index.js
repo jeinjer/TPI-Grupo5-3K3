@@ -1,25 +1,21 @@
-const express = require("express");
+const express = require('express');
 require('./base-orm/sqlite-init')
-
 const app = express();
 
-const articulospanaderia = require('./routes/articulospanaderia')
-
-app.use(articulospanaderia);
+const articuloslacteos = require('./routes/articuloslacteos')
+app.use(articuloslacteos)
 app.use(express.json());
 
-// controlar ruta
-app.get("/", (req, res) => {
-  res.send("Backend inicial dds-backend!");
+app.get('/', (req, res) => {
+    res.send('Ruta por defecto')
 });
 
-// levantar servidor
-if (!module.parent){
-  const port = process.env.PORT || 3000;
-  app.locals.fechaInicio = new Date();
-  app.listen(port, () => {
-    console.log(`Sitio escuchando en el puerto ${port}`);
-  });
-}
-
-module.exports = app;
+if (!module.parent) {   // si no es llamado por otro modulo, es decir, si es el modulo principal -> levantamos el servidor
+    const port = process.env.PORT || 3000;   // en produccion se usa el puerto de la variable de entorno PORT
+    app.locals.fechaInicio = new Date();
+    app.listen(port, () => {
+      console.log(`sitio escuchando en el puerto ${port}`);
+    });
+  }
+  module.exports = app; // para testing
+  
