@@ -3,9 +3,9 @@ require('./base-orm/sqlite-init')
 const app = express();
 
 const articuloslacteos = require('./routes/articuloslacteos')
-const articulospanaderia = require('./routes/articulospanaderias)
+const articulospanaderia = require('./routes/articulospanaderia')
 app.use(articuloslacteos)
-app.use(articulospanaderias)
+app.use(articulospanaderia)
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -21,3 +21,5 @@ if (!module.parent) {   // si no es llamado por otro modulo, es decir, si es el 
   }
   module.exports = app; // para testing
   
+
+
