@@ -6,7 +6,7 @@ router.use(express.json())
 
 
 router.get('/api/articulospanaderia', async function (req, res, next) {
-  let = data = await db.articulospanaderia.findAll({
+  let data = await db.articulospanaderia.findAll({
     attibutes: ["IdArticuloPanaderia", "Nombre"],
     where:{Activo: true},
   });
@@ -68,13 +68,11 @@ router.put('/api/articulospanaderia/:id', async (req, res) => {
     if (articuloPanaderia){
       articuloPanaderia.Activo = false;
       await articuloPanaderia.save();
-      res.json({ message: 'articulo panaderia marcado como inactivo' });
+      res.json({ message: 'Articulo panaderia marcado como inactivo' });
     } else {
       res.status(404).json({ message: 'categoriaPanaderia no encontrada' })
     }
   });
   
-
-
-
+  
 module.exports = router;

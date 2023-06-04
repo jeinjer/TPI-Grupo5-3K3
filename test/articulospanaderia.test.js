@@ -40,7 +40,7 @@ describe("GET /api/articulospanaderia/:id", function () {
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.objectContaining({
-        IdArticuloLacteo: 1,
+        IdArticuloPanaderia: 1,
         Nombre: expect.any(String),
       })
     );
@@ -53,7 +53,7 @@ describe("POST /api/articulospanaderia/", () => {
     expect(res.statusCode).toEqual(201);
     expect(res.body).toEqual(
       expect.objectContaining({
-        IdArticuloLacteo: expect.any(Number),
+        IdArticuloPanaderia: expect.any(Number),
         Nombre: expect.any(String),
       })
     );
