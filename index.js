@@ -3,7 +3,9 @@ require('./base-orm/sqlite-init')
 const app = express();
 
 const articuloslacteos = require('./routes/articuloslacteos')
+const articulospanaderia = require('./routes/articulospanaderias)
 app.use(articuloslacteos)
+app.use(articulospanaderias)
 app.use(express.json());
 
 app.get('/', (req, res) => {
