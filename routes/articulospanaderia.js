@@ -3,11 +3,9 @@ const router = express.Router();
 const db = require('../base-orm/sequelize-init')
 router.use(express.json())
 
-
-
 router.get('/api/articulospanaderia', async function (req, res, next) {
   let data = await db.articulospanaderia.findAll({
-    attibutes: ["IdArticuloPanaderia", "Nombre"],
+    attributes: ["IdArticuloPanaderia", "Nombre", "Precio", "Stock", "FechaVencimiento"],
     where:{Activo: true},
   });
   res.json(data);

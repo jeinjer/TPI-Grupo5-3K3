@@ -5,7 +5,7 @@ router.use(express.json())
 
 router.get("/api/articuloslacteos", async function (req, res, next) {
   let data = await db.articuloslacteos.findAll({
-    attributes: ["IdArticuloLacteo", "Nombre"],
+    attributes: ["IdArticuloLacteo", "Nombre", "Precio", "Stock", "FechaVencimiento"],
     where: { Activo: true }, // Solo artículos activos
   });
   res.json(data);

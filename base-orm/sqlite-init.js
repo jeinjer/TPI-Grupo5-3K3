@@ -1,16 +1,14 @@
 const db = require("aa-sqlite");
 
-async function CrearBaseSiNoExiste() {
+async function CrearTablaArticulosLacteos() {
   try {
     await db.open("./.data/articulos.db");
 
-    let existe = false;
     const res = await db.get(
-      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articulos'",
+      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articuloslacteos'",
       []
     );
-    if (res.contar > 0) existe = true;
-    if (!existe) {
+    if (res.contar === 0) {
       await db.run(`
         CREATE TABLE articuloslacteos( 
           IdArticuloLacteo INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,22 +20,10 @@ async function CrearBaseSiNoExiste() {
         );`
       );
 
-      await db.run(`
-        CREATE TABLE articulospanaderia( 
-          IdArticuloPanaderia INTEGER PRIMARY KEY AUTOINCREMENT,
-          Nombre TEXT NOT NULL UNIQUE,
-          Precio REAL,
-          Stock INTEGER,
-          FechaVencimiento TEXT,
-          Activo INTEGER
-        );`
-      );
-
       console.log("Tabla articulos lacteos creada!");
-      console.log("Tabla articulos panaderia creada!");
 
       await db.run(`
-        INSERT INTO articuloslacteos VALUES
+        INSERT INTO articuloslacteos VALUES 
         (1,'Leche La Serenisima', 5.99, 100, '2023-05-28', 1),
         (2,'Yogurt de frutilla Ilolay', 2.49, 50, '2023-05-28', 1),
         (3,'Yogur de vainilla Sancor', 0.99, 200, '2023-05-28', 1),
@@ -50,6 +36,37 @@ async function CrearBaseSiNoExiste() {
         (10,'Kefir Nestle', 0.99, 180, '2023-05-28', 1)
       `
       );
+
+      console.log("Registros insertados en la tabla articulos lacteos.");
+    }
+
+    await db.close();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function CrearTablaArticulosPanaderia() {
+  try {
+    await db.open("./.data/articulos.db");
+
+    const res = await db.get(
+      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articulospanaderia'",
+      []
+    );
+    if (res.contar === 0) {
+      await db.run(`
+        CREATE TABLE articulospanaderia( 
+          IdArticuloPanaderia INTEGER PRIMARY KEY AUTOINCREMENT,
+          Nombre TEXT NOT NULL UNIQUE,
+          Precio REAL,
+          Stock INTEGER,
+          FechaVencimiento TEXT,
+          Activo INTEGER
+        );`
+      );
+
+      console.log("Tabla articulos panaderia creada!");
 
       await db.run(`
         INSERT INTO articulospanaderia VALUES
@@ -65,13 +82,21 @@ async function CrearBaseSiNoExiste() {
         (10,'Harina de Trigo', 1.35, 180, '2023-05-28', 1)
       `
       );
+
+      console.log("Registros insertados en la tabla articulos panaderia.");
     }
 
     await db.close();
-    console.log("Base de datos creada correctamente.");
   } catch (error) {
-    console.error("Error al crear la base de datos:", error);
+    console.error(error);
   }
+}
+
+async function CrearBaseSiNoExiste() {
+  await CrearTablaArticulosLacteos();
+  await CrearTablaArticulosPanaderia();
+
+  console.log("Base de datos creada correctamente.");
 }
 
 CrearBaseSiNoExiste();
