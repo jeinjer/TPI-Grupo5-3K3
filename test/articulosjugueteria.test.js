@@ -25,7 +25,7 @@ describe("GET /api/articulosjugueteria", function () {
     expect(res.body).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          IdArticuloPanaderia: expect.any(Number),
+          IdArticuloJugueteria: expect.any(Number),
           Nombre: expect.any(String),
         }),
       ])

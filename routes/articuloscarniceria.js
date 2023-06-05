@@ -3,10 +3,8 @@ const router = express.Router();
 const db = require('../base-orm/sequelize-init')
 router.use(express.json())
 
-
-
 router.get('/api/articuloscarniceria', async function (req, res, next) {
-  let = data = await db.articuloscarniceria.findAll({
+  let data = await db.articuloscarniceria.findAll({
     attibutes: ["IdArticuloCarniceria", "Nombre"],
     where:{Activo: true},
   });
@@ -68,7 +66,7 @@ router.put('/api/articuloscarniceria/:id', async (req, res) => {
     if (articuloCarniceria){
       articuloCarniceria.Activo = false;
       await articuloCarniceria.save();
-      res.json({ message: 'articulo carniceria marcado como inactivo' });
+      res.json({ message: 'Articulo carniceria marcado como inactivo' });
     } else {
       res.status(404).json({ message: 'categoriaCarniceria no encontrada' })
     }

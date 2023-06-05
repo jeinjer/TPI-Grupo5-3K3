@@ -5,11 +5,13 @@ const app = express();
 const articuloslacteos = require('./routes/articuloslacteos');
 const articulospanaderia = require('./routes/articulospanaderia');
 const articulosjugueteria = require('./routes/articulosjugueteria');
+const articuloscarniceria = require('./routes/articuloscarniceria');
 
 app.use(express.json());
 app.use(articuloslacteos);
 app.use(articulospanaderia);
 app.use(articulosjugueteria);
+app.use(articuloscarniceria);
 
 app.get('/', (req, res) => {
   res.send('Ruta por defecto');
