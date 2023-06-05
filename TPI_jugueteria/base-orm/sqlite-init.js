@@ -1,16 +1,14 @@
 const db = require("aa-sqlite");
 
-async function CrearBaseSiNoExiste() {
+async function CrearTablaArticulosJugueteria() {
   try {
     await db.open("./.data/jugueteria.db");
 
-    existe = false;
-    res = await db.get(
+    const res = await db.get(
       "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articulosjugueteria'",
       []
     );
-    if (res.contar > 0) existe = true;
-    if (!existe) {
+    if (res.contar === 0) {
       await db.run(`
         CREATE TABLE articulosjugueteria( 
           IdArticuloJugueteria INTEGER PRIMARY KEY AUTOINCREMENT,
