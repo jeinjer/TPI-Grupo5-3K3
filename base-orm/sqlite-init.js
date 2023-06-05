@@ -184,11 +184,58 @@ async function CrearTablaArticulosCarniceria() {
 }
 }
 
+async function CrearTablaArticulosLimpieza() {
+  try {
+    await db.open("./.data/limpieza.db");
+
+    existe = false;
+    res = await db.get(
+      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articuloslimpieza'",
+      []
+    );
+    if (res.contar > 0) existe = true;
+    if (!existe) {
+      await db.run(`
+        CREATE TABLE articuloslimpieza( 
+          IdArticuloLimpieza INTEGER PRIMARY KEY AUTOINCREMENT,
+          Nombre TEXT NOT NULL UNIQUE,
+          Precio REAL,
+          Stock INTEGER,
+          FechaEnvasado TEXT,
+          Activo INTEGER
+        );`
+      );
+      console.log("Tabla articulos limpieza creada!");
+
+      await db.run(`
+        INSERT INTO articuloslimpieza VALUES
+        (1,'Detergente', 15.70, 60, '2023-06-3', 1),
+        (2,'Lavandina', 13.50, 80, '2023-06-3', 1),
+        (3,'Esponja de cocina', 8.99, 100, '2023-06-3', 1),
+        (4,'Trapo de piso', 6.50, 65, '2023-06-3', 1),
+        (5,'Escoba', 10.25, 30, '2023-06-3', 1),
+        (6,'Palo de piso', 15.90, 45, '2023-06-3', 1),
+        (7,'Limpia vidrios', 20.70, 80, '2023-06-3', 1),
+        (8,'Guantes de limpieza', 5.20, 55, '2023-06-3', 1),
+        (9,'Suavizante', 17.80, 15, '2023-06-3', 1),
+        (10,'Mopa', 12.40, 120, '2023-06-3', 1)
+      `
+      );
+    }
+
+    await db.close();
+    console.log("Base de datos creada correctamente.");
+  } catch (error) {
+    console.error("Error al crear la base de datos:", error);
+  }
+}
+
 async function CrearBaseSiNoExiste() {
   await CrearTablaArticulosLacteos();
   await CrearTablaArticulosPanaderia();
   await CrearTablaArticulosJugueteria();
   await CrearTablaArticulosCarniceria();
+  await CrearTablaArticulosLimpieza();
   console.log("Base de datos creada correctamente.");
 }
 
