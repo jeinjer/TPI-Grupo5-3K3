@@ -5,7 +5,7 @@ router.use(express.json())
 
 router.get('/api/articuloscarniceria', async function (req, res, next) {
   let data = await db.articuloscarniceria.findAll({
-    attibutes: ["IdArticuloCarniceria", "Nombre"],
+    attributes: ["IdArticuloCarniceria", "Nombre"],
     where:{Activo: true},
   });
   res.json(data);
@@ -13,7 +13,7 @@ router.get('/api/articuloscarniceria', async function (req, res, next) {
 
 router.get('/api/articuloscarniceria/:id', async function (req, res,next) {
     let data = await db.articuloscarniceria.findByPk(req.params.id, {
-      attributes: ["IdArticuloCarniceria", "Nombre", "Precio", "Stock", "FechaEnvasado"],
+      attributes: ["IdArticuloCarniceria", "Nombre"],
       where: {Activo: true},
     });
    if (data){
@@ -46,9 +46,9 @@ router.put('/api/articuloscarniceria/:id', async (req, res) => {
       });
       if (articuloCarniceria){
         articuloCarniceria.Nombre = Nombre;
-        articuloCarniceria.Nombre = Precio;
-        articuloCarniceria.Nombre = Stock;
-        articuloCarniceria.Nombre = FechaEnvasado;
+        articuloCarniceria.Precio = Precio;
+        articuloCarniceria.Stock = Stock;
+        articuloCarniceria.FechaEnvasado = FechaEnvasado;
         await articuloCarniceria.save();
         res.json({message: 'Articulo carniceria actualizado'});
       } else {

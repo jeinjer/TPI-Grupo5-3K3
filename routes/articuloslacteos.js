@@ -5,7 +5,7 @@ router.use(express.json())
 
 router.get("/api/articuloslacteos", async function (req, res, next) {
   let data = await db.articuloslacteos.findAll({
-    attributes: ["IdArticuloLacteo", "Nombre", "Precio", "Stock", "FechaVencimiento"],
+    attributes: ["IdArticuloLacteo", "Nombre"],
     where: { Activo: true }, // Solo artículos activos
   });
   res.json(data);
@@ -13,7 +13,7 @@ router.get("/api/articuloslacteos", async function (req, res, next) {
 
 router.get("/api/articuloslacteos/:id", async function (req, res, next) {
   let data = await db.articuloslacteos.findByPk(req.params.id, {
-    attributes: ["IdArticuloLacteo", "Nombre", "Precio", "Stock", "FechaVencimiento"],
+    attributes: ["IdArticuloLacteo", "Nombre"],
     where: { Activo: true }, // Solo artículos activos
   });
   if (data) {

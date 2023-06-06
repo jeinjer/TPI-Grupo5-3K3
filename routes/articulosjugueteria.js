@@ -5,7 +5,7 @@ router.use(express.json())
 
 router.get('/api/articulosjugueteria', async function (req, res, next) {
   let data = await db.articulosjugueteria.findAll({
-    attibutes: ["IdArticuloJugueteria", "Nombre"],
+    attributes: ["IdArticuloJugueteria", "Nombre"],
     where:{Activo: true},
   });
   res.json(data);
@@ -13,7 +13,7 @@ router.get('/api/articulosjugueteria', async function (req, res, next) {
 
 router.get('/api/articulosjugueteria/:id', async function (req, res,next) {
     let data = await db.articulosjugueteria.findByPk(req.params.id, {
-      attributes: ["IdArticuloJugueteria", "Nombre", "Precio", "Stock", "FechaIngreso"],
+      attributes: ["IdArticuloJugueteria", "Nombre"],
       where: {Activo: true},
     });
    if (data){

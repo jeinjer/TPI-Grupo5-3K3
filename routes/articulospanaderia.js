@@ -5,7 +5,7 @@ router.use(express.json())
 
 router.get('/api/articulospanaderia', async function (req, res, next) {
   let data = await db.articulospanaderia.findAll({
-    attributes: ["IdArticuloPanaderia", "Nombre", "Precio", "Stock", "FechaVencimiento"],
+    attributes: ["IdArticuloPanaderia", "Nombre"],
     where:{Activo: true},
   });
   res.json(data);
@@ -13,7 +13,7 @@ router.get('/api/articulospanaderia', async function (req, res, next) {
 
 router.get('/api/articulospanaderia/:id', async function (req, res,next) {
     let data = await db.articulospanaderia.findByPk(req.params.id, {
-      attributes: ["IdArticuloPanaderia", "Nombre", "Precio", "Stock", "FechaVencimiento"],
+      attributes: ["IdArticuloPanaderia", "Nombre"],
       where: {Activo: true},
     });
    if (data){
@@ -46,9 +46,9 @@ router.put('/api/articulospanaderia/:id', async (req, res) => {
       });
       if (articuloPanaderia){
         articuloPanaderia.Nombre = Nombre;
-        articuloPanaderia.Nombre = Precio;
-        articuloPanaderia.Nombre = Stock;
-        articuloPanaderia.Nombre = FechaVencimiento;
+        articuloPanaderia.Precio = Precio;
+        articuloPanaderia.Stock = Stock;
+        articuloPanaderia.FechaVencimiento = FechaVencimiento;
         await articuloPanaderia.save();
         res.json({message: 'Articulo panaderia actualizado'});
       } else {

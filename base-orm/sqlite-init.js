@@ -141,13 +141,11 @@ async function CrearTablaArticulosCarniceria() {
   try {
     await db.open("./.data/articulos.db");
 
-    existe = false;
-    res = await db.get(
+    const res = await db.get(
       "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articuloscarniceria'",
       []
     );
-    if (res.contar > 0) existe = true;
-    if (!existe) {
+    if (res.contar === 0) {
       await db.run(`
         CREATE TABLE articuloscarniceria( 
           IdArticuloCarniceria INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -166,7 +164,7 @@ async function CrearTablaArticulosCarniceria() {
         (2,'Costilla', 11.30, 50, '2023-05-26', 1),
         (3,'Matambre', 13.99, 40, '2023-05-12', 1),
         (4,'Falda', 11.35, 75, '2023-05-28', 1),
-        (5, 'Colita de cuadril', 9.99, 30, '2023-05-24', 1),
+        (5,'Colita de cuadril', 9.99, 30, '2023-05-24', 1),
         (6,'Costeleta', 12.50, 80, '2023-05-20', 1),
         (7,'Pechuga Pollo', 19.50, 80, '2023-05-29', 1),
         (8,'Solomillo', 11.95, 90, '2023-05-22', 1),
@@ -174,29 +172,29 @@ async function CrearTablaArticulosCarniceria() {
         (10,'Chorizo', 6.35, 180, '2023-05-22', 1)
       `
       );
-    
 
-    console.log("Registros insertados en la tabla articulos carniceria.");
-  }
+      console.log("Registros insertados en la tabla articulos carniceria.");
+    }
+
     await db.close();
   } catch (error) {
-  console.error(error);
-}
+    console.error(error);
+  }
 }
 
 async function CrearTablaArticulosLimpieza() {
   try {
-    await db.open("./.data/limpieza.db");
+    await db.open("./.data/articulos.db");
 
     existe = false;
     res = await db.get(
-      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articuloslimpieza'",
+      "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'articuloslimpiezas'",
       []
     );
     if (res.contar > 0) existe = true;
     if (!existe) {
       await db.run(`
-        CREATE TABLE articuloslimpieza( 
+        CREATE TABLE articuloslimpiezas( 
           IdArticuloLimpieza INTEGER PRIMARY KEY AUTOINCREMENT,
           Nombre TEXT NOT NULL UNIQUE,
           Precio REAL,
@@ -208,7 +206,7 @@ async function CrearTablaArticulosLimpieza() {
       console.log("Tabla articulos limpieza creada!");
 
       await db.run(`
-        INSERT INTO articuloslimpieza VALUES
+        INSERT INTO articuloslimpiezas VALUES
         (1,'Detergente', 15.70, 60, '2023-06-3', 1),
         (2,'Lavandina', 13.50, 80, '2023-06-3', 1),
         (3,'Esponja de cocina', 8.99, 100, '2023-06-3', 1),
@@ -221,12 +219,13 @@ async function CrearTablaArticulosLimpieza() {
         (10,'Mopa', 12.40, 120, '2023-06-3', 1)
       `
       );
+
+      console.log("Registros insertados en la tabla articulos limpieza.");
     }
 
     await db.close();
-    console.log("Base de datos creada correctamente.");
   } catch (error) {
-    console.error("Error al crear la base de datos:", error);
+    console.error(error);
   }
 }
 
