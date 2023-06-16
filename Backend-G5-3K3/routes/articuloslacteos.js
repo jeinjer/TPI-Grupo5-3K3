@@ -3,13 +3,42 @@ const router = express.Router();
 const db = require('../base-orm/sequelize-init')
 router.use(express.json())
 
+const { Op } = require("sequelize");
+
 router.get("/api/articuloslacteos", async function (req, res, next) {
-  let data = await db.articuloslacteos.findAll({
-    attributes: ["IdArticuloLacteo", "Nombre"],
-    where: { Activo: true }, // Solo artículos activos
+  let where = {};
+
+  if (req.query.Nombre != undefined && req.query.Nombre != "") {
+    where.Nombre = {
+      [Op.like]: "%" + req.query.Nombre + "%",
+    };
+  }if (req.query.Activo != undefined && req.query.Activo !== "") {
+    where.Activo = req.query.Activo === "true";
+  }
+  const Pagina = req.query.Pagina ?? 1;
+  const TamañoPagina = 10;
+  const { count, rows } = await db.articuloslacteos.findAndCountAll({
+    attributes: [
+      "IdArticuloLacteo",
+      "Nombre",
+      "Precio",
+      "Stock",
+      "FechaVencimiento",
+      "Activo",
+    ],
+    order: [["Nombre", "ASC"]],
+    where,
+    offset: (Pagina - 1) * TamañoPagina,
+    limit: TamañoPagina,
   });
-  res.json(data);
+
+  return res.json({ Items: rows, RegistrosTotal: count });
 });
+
+
+module.exports = router;
+
+
 
 router.get("/api/articuloslacteos/:id", async function (req, res, next) {
   let data = await db.articuloslacteos.findByPk(req.params.id, {

@@ -1,35 +1,31 @@
-import { config } from "../config";
-import httpService from "./http.service";
+import axios from "axios";
 
-const urlResource = config.urlResourceArticulosLacteos;
+const urlResource = "http://localhost:4000/api/articuloslacteos";
 
-async function Buscar(Nombre, Activo) {
-  const resp = await httpService.get(urlResource, {
-    params: { Nombre, Activo },
+async function Buscar(Nombre, Activo, Pagina) {
+  const resp = await axios.get(urlResource, {
+    params: { Nombre, Activo, Pagina },
   });
   return resp.data;
 }
 
 async function BuscarPorId(item) {
-  const resp = await httpService.get(urlResource + "/" + item.IdArticuloLacteo);
+  const resp = await axios.get(urlResource + "/" + item.IdArticuloLacteo);
   return resp.data;
 }
 
 async function ActivarDesactivar(item) {
-  await httpService.delete(urlResource + "/" + item.IdArticuloLacteo);
+  await axios.delete(urlResource + "/" + item.IdArticuloLacteo);
 }
 
 async function Grabar(item) {
   if (item.IdArticuloLacteo === 0) {
-    await httpService.post(urlResource, item);
+    await axios.post(urlResource, item);
   } else {
-    await httpService.put(urlResource + "/" + item.IdArticuloLacteo, item);
+    await axios.put(urlResource + "/" + item.IdArticuloLacteo, item);
   }
 }
 
 export const articuloslacteosService = {
-  Buscar,
-  BuscarPorId,
-  ActivarDesactivar,
-  Grabar,
+  Buscar,BuscarPorId,ActivarDesactivar,Grabar
 };

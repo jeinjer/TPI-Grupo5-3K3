@@ -4,7 +4,6 @@ import ArticulosLacteosBuscar from "./ArticulosLacteosBuscar";
 import ArticulosLacteosListado from "./ArticulosLacteosListado";
 import ArticulosLacteosRegistro from "./ArticulosLacteosRegistro";
 import { articuloslacteosService } from "../../services/articuloslacteos.service";
-import modalDialogService from "../../services/modalDialog.service";
 
 function ArticulosLacteos() {
   const TituloAccionABMC = {
@@ -21,11 +20,29 @@ function ArticulosLacteos() {
 
   const [Items, setItems] = useState(null);
   const [Item, setItem] = useState(null); // usado en BuscarporId (Modificar, Consultar)
+  const [RegistrosTotal, setRegistrosTotal] = useState(0);
+  const [Pagina, setPagina] = useState(1);
+  const [Paginas, setPaginas] = useState([]);
 
+  async function Buscar(_pagina) {
+    if (_pagina && _pagina !== Pagina) {
+      setPagina(_pagina);
+    }
+    // OJO Pagina (y cualquier estado...) se actualiza para el proximo render, para buscar usamos el parametro _pagina
+    else {
+      _pagina = Pagina;
+    }
 
-  async function Buscar() {
-    const data = await articuloslacteosService.Buscar(Nombre, Activo);
+    const data = await articuloslacteosService.Buscar(Nombre, Activo, _pagina);
     setItems(data.Items);
+    setRegistrosTotal(data.RegistrosTotal);
+
+    //generar array de las paginas para mostrar en select del paginador
+    const arrPaginas = [];
+    for (let i = 1; i <= Math.ceil(data.RegistrosTotal / 10); i++) {
+      arrPaginas.push(i);
+    }
+    setPaginas(arrPaginas);
   }
 
   async function BuscarPorId(item, accionABMC) {
@@ -35,15 +52,14 @@ function ArticulosLacteos() {
   }
 
   function Consultar(item) {
-    BuscarPorId(item, "C");
+    BuscarPorId(item, "C"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
   }
-
   function Modificar(item) {
     if (!item.Activo) {
-      modalDialogService.Alert("No puede modificarse un registro Inactivo.");
+      alert("No puede modificarse un registro Inactivo.");
       return;
     }
-    BuscarPorId(item, "M");
+    BuscarPorId(item, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
   }
 
   function Agregar() {
@@ -59,42 +75,37 @@ function ArticulosLacteos() {
   }
 
   function Imprimir() {
-    modalDialogService.Alert("En desarrollo...");
+    alert("En desarrollo...");
   }
 
   async function ActivarDesactivar(item) {
-    modalDialogService.Confirm(
+    const resp = window.confirm(
       "Esta seguro que quiere " +
         (item.Activo ? "desactivar" : "activar") +
-        " el registro?",
-      undefined,
-      undefined,
-      undefined,
-      async () => {
-        await articuloslacteosService.ActivarDesactivar(item);
-        await Buscar();
-      }
+        " el registro?"
     );
+    if (resp) {
+      await articuloslacteosService.ActivarDesactivar(item);
+      await Buscar();
+    }
   }
 
   async function Grabar(item) {
+    // agregar o modificar
     await articuloslacteosService.Grabar(item);
     await Buscar();
     Volver();
 
-    modalDialogService.Alert(
-      "Registro " +
-        (AccionABMC === "A" ? "agregado" : "modificado") +
-        " correctamente.",
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      "success"
-    );
+    setTimeout(() => {
+      alert(
+        "Registro " +
+          (AccionABMC === "A" ? "agregado" : "modificado") +
+          " correctamente."
+      );
+    }, 0);
   }
 
+  // Volver/Cancelar desde Agregar/Modificar/Consultar
   function Volver() {
     setAccionABMC("L");
   }
@@ -116,6 +127,7 @@ function ArticulosLacteos() {
         />
       )}
 
+      {/* Tabla de resutados de busqueda y Paginador */}
       {AccionABMC === "L" && Items?.length > 0 && (
         <ArticulosLacteosListado
           {...{
@@ -124,6 +136,9 @@ function ArticulosLacteos() {
             Modificar,
             ActivarDesactivar,
             Imprimir,
+            Pagina,
+            RegistrosTotal,
+            Paginas,
             Buscar,
           }}
         />
@@ -136,6 +151,7 @@ function ArticulosLacteos() {
         </div>
       )}
 
+      {/* Formulario de alta/modificacion/consulta */}
       {AccionABMC !== "L" && (
         <ArticulosLacteosRegistro
           {...{ AccionABMC, Item, Grabar, Volver }}
@@ -144,5 +160,4 @@ function ArticulosLacteos() {
     </div>
   );
 }
-
 export { ArticulosLacteos };
