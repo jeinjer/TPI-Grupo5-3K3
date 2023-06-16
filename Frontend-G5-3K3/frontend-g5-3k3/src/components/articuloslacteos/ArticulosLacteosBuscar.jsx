@@ -1,8 +1,8 @@
 import React from "react";
-export default function ArticulosLacteosBuscar ({Nombre, setNombre, Activo, setActivo, Buscar, Agregar}) {
+export default function ArticulosBuscar ({Nombre, setNombre, Activo, setActivo, Buscar, Agregar}) {
 
     return (
-    <form name="FormBusqueda">
+    <form name="FormBusqueda" onSubmit={(e)=> e.preventDefault()}>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-4 col-md-2">

@@ -4,6 +4,7 @@ import ArticulosLacteosBuscar from "./ArticulosLacteosBuscar";
 import ArticulosLacteosListado from "./ArticulosLacteosListado";
 import ArticulosLacteosRegistro from "./ArticulosLacteosRegistro";
 import { articuloslacteosService } from "../../services/articuloslacteos.service";
+import modalDialogService from "../../services/modalDialog.service";
 
 function ArticulosLacteos() {
   const TituloAccionABMC = {
@@ -21,17 +22,8 @@ function ArticulosLacteos() {
   const [Items, setItems] = useState(null);
   const [Item, setItem] = useState(null); // usado en BuscarporId (Modificar, Consultar)
 
-  const [ArticulosLacteos, setArticulosLacteos] = useState(null);
 
-  useEffect(() => {
-    async function BuscarArticulosLacteos() {
-      let data = await articuloslacteosService.Buscar();
-      setArticulosLacteos(data);
-    }
-    BuscarArticulosLacteos();
-  }, []);
-
-  async function Buscar(_pagina) {
+  async function Buscar() {
     const data = await articuloslacteosService.Buscar(Nombre, Activo);
     setItems(data.Items);
   }
@@ -43,15 +35,15 @@ function ArticulosLacteos() {
   }
 
   function Consultar(item) {
-    BuscarPorId(item, "C"); 
+    BuscarPorId(item, "C");
   }
-  
+
   function Modificar(item) {
     if (!item.Activo) {
-      alert("No puede modificarse un registro Inactivo.");
+      modalDialogService.Alert("No puede modificarse un registro Inactivo.");
       return;
     }
-    BuscarPorId(item, "M"); 
+    BuscarPorId(item, "M");
   }
 
   function Agregar() {
@@ -67,19 +59,22 @@ function ArticulosLacteos() {
   }
 
   function Imprimir() {
-    alert("En desarrollo...");
+    modalDialogService.Alert("En desarrollo...");
   }
 
   async function ActivarDesactivar(item) {
-    const resp = window.confirm(
+    modalDialogService.Confirm(
       "Esta seguro que quiere " +
         (item.Activo ? "desactivar" : "activar") +
-        " el registro?"
+        " el registro?",
+      undefined,
+      undefined,
+      undefined,
+      async () => {
+        await articuloslacteosService.ActivarDesactivar(item);
+        await Buscar();
+      }
     );
-    if (resp) {
-      await articuloslacteosService.ActivarDesactivar(item);
-      await Buscar();
-    }
   }
 
   async function Grabar(item) {
@@ -87,13 +82,17 @@ function ArticulosLacteos() {
     await Buscar();
     Volver();
 
-    setTimeout(() => {
-      alert(
-        "Registro " +
-          (AccionABMC === "A" ? "agregado" : "modificado") +
-          " correctamente."
-      );
-    }, 0);
+    modalDialogService.Alert(
+      "Registro " +
+        (AccionABMC === "A" ? "agregado" : "modificado") +
+        " correctamente.",
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      "success"
+    );
   }
 
   function Volver() {
@@ -139,10 +138,11 @@ function ArticulosLacteos() {
 
       {AccionABMC !== "L" && (
         <ArticulosLacteosRegistro
-          {...{ AccionABMC, ArticulosLacteos, Item, Grabar, Volver }}
+          {...{ AccionABMC, Item, Grabar, Volver }}
         />
       )}
     </div>
   );
 }
+
 export { ArticulosLacteos };

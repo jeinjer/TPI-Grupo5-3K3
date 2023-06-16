@@ -6,11 +6,10 @@ export default function ArticulosLacteosListado({
   Consultar,
   Modificar,
   ActivarDesactivar,
-  Imprimir,
-  Buscar,
+  Imprimir
 }) {
   return (
-    <>
+    <div className="table-responsive">
       <table className="table table-hover table-sm table-bordered table-striped">
         <thead>
           <tr>
@@ -67,11 +66,16 @@ export default function ArticulosLacteosListado({
             ))}
         </tbody>
       </table>
-      <div className="col">
-        <button className="btn btn-primary float-end" onClick={() => Imprimir()}>
-          <i className="fa fa-print"></i>Imprimir
-        </button>
+
+      <div className="paginador">
+        <div className="row">
+          <div className="col">
+            <button className="btn btn-primary float-end" onClick={() => Imprimir()}>
+              <i className="fa fa-print"></i>Imprimir
+            </button>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 
 export default function ArticulosLacteosRegistro({
   AccionABMC,
-  ArticulosLacteos,
   Item,
   Grabar,
   Volver,
@@ -120,7 +119,7 @@ export default function ArticulosLacteosRegistro({
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
               <label className="col-form-label" htmlFor="FechaVencimiento">
-                Fecha de vencimiento<span className="text-danger">*</span>:
+                Fecha de Vencimiento<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
