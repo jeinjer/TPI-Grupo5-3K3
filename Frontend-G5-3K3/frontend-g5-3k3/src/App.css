@@ -129,3 +129,12 @@ thead {
   background-color: #aeb7d7; /* #e9ecef; */
   border-color: #dee2e6;
 }
+
+/* redes al pie de pagina */
+.redes {
+  background-color: blue;
+  color: white;
+  padding: 0.4em;
+  margin: 0.3em;
+  border-radius: 1em;
+}

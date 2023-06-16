@@ -2,7 +2,7 @@ import "./App.css";
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-
+import { Footer } from "./components/Footer";
 import Menu from "./components/Menu";
 import { Inicio } from "./components/Inicio";
 import { ArticulosLacteos } from "./components/articuloslacteos/ArticulosLacteos";
@@ -51,6 +51,7 @@ function App() {
               <Route path="*" element={<Navigate to="/inicio" replace />} />
             </Routes>
           </div>
+          <Footer />
         </BrowserRouter>
       </ErrorBoundary>
     </>
