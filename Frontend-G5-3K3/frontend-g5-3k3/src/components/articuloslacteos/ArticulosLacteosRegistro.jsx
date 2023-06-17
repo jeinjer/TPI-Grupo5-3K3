@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
-export default function ArticulosLacteosRegistro({
+export default function ArticulosRegistro({
   AccionABMC,
   Item,
   Grabar,
@@ -16,7 +16,7 @@ export default function ArticulosLacteosRegistro({
   const onSubmit = (data) => {
     Grabar(data);
   };
-
+  if (!Item) return null;
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="container-fluid">
@@ -49,7 +49,7 @@ export default function ArticulosLacteosRegistro({
                   "form-control " + (errors?.Nombre ? "is-invalid" : "")
                 }
               />
-              {errors?.Nombre && touchedFields?.Nombre && (
+              {errors?.Nombre && touchedFields.Nombre && (
                 <div className="invalid-feedback">
                   {errors?.Nombre?.message}
                 </div>
@@ -119,14 +119,14 @@ export default function ArticulosLacteosRegistro({
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
               <label className="col-form-label" htmlFor="FechaVencimiento">
-                Fecha de Vencimiento<span className="text-danger">*</span>:
+                Fecha Vencimiento<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="date"
                 {...register("FechaVencimiento", {
-                  required: { value: true, message: "Fecha de vencimiento es requerido" }
+                  required: { message: "Fecha Vencimiento es requerido" }
                 })}
                 className={
                   "form-control " + (errors?.FechaVencimiento ? "is-invalid" : "")

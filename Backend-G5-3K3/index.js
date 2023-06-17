@@ -23,9 +23,12 @@ app.get('/', (req, res) => {
   res.send('Ruta por defecto');
 });
 
-const port = 4000;
-app.listen(port, () => {
-  console.log(`Servidor iniciado en el puerto ${port}`);
-});
+if (!module.parent) {
+  const port = process.env.PORT || 4000;  
+  app.locals.fechaInicio = new Date();
+  app.listen(port, () => {
+    console.log(`sitio escuchando en el puerto ${port}`);
+  });
+}
 
 module.exports = app;

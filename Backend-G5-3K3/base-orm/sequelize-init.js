@@ -32,8 +32,14 @@ const articuloslacteos = sequelize.define(
       allowNull: false,
     },
     FechaVencimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha Vencimineto es requerido",
+        }
+      }
     },
     Activo: {
       type: DataTypes.BOOLEAN,

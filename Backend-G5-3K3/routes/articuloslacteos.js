@@ -1,9 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('../base-orm/sequelize-init')
+const db = require("../base-orm/sequelize-init");
+const { Op, ValidationError } = require("sequelize");
 router.use(express.json())
-
-const { Op } = require("sequelize");
 
 router.get("/api/articuloslacteos", async function (req, res, next) {
   let where = {};
@@ -36,13 +35,14 @@ router.get("/api/articuloslacteos", async function (req, res, next) {
 });
 
 
-module.exports = router;
-
-
-
 router.get("/api/articuloslacteos/:id", async function (req, res, next) {
   let data = await db.articuloslacteos.findByPk(req.params.id, {
-    attributes: ["IdArticuloLacteo", "Nombre"],
+    attributes: ["IdArticuloLacteo", 
+                 "Nombre", 
+                 "Precio", 
+                 "Stock",
+                 "FechaVencimiento",
+                 "Activo"],
     where: { Activo: true }, // Solo artículos activos
   });
   if (data) {
@@ -88,20 +88,25 @@ router.put('/api/articuloslacteos/:id', async (req, res) => {
   }
 });
 
-
-router.delete('/api/articuloslacteos/:id', async (req, res) => {
-  let articuloLacteo = await db.articuloslacteos.findOne({
-    where: { IdArticuloLacteo: req.params.id },
-  });
-  if (articuloLacteo) {
-    // Cambiar el estado a inactivo
-    articuloLacteo.Activo = false;
-    await articuloLacteo.save();
-    res.json({ message: 'Articulo lacteo marcado como inactivo' });
-  } else {
-    res.status(404).json({ message: 'Articulo lacteo no encontrado' });
+router.delete("/api/articuloslacteos/:id", async (req, res) => {
+    try {
+      let data = await db.sequelize.query(
+        "UPDATE articuloslacteos SET Activo = case when Activo = 1 then 0 else 1 end WHERE IdArticuloLacteo = :IdArticuloLacteo",
+        {
+          replacements: { IdArticuloLacteo: +req.params.id },
+        }
+      );
+      res.sendStatus(200);
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        const messages = err.errors.map((x) => x.message);
+        res.status(400).json(messages);
+      } else {
+        throw err;
+      }
+    }
   }
-});
+);
 
 
 module.exports = router;
