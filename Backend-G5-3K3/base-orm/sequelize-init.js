@@ -148,8 +148,14 @@ const articulosjugueteria = sequelize.define(
       allowNull: false,
     },
     FechaIngreso: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha Ingreso es requerido",
+        }
+      }
     },
     Activo: {
       type: DataTypes.BOOLEAN,
