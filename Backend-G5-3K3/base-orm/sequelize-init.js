@@ -37,7 +37,7 @@ const articuloslacteos = sequelize.define(
       validate: {
         notNull: {
           args: true,
-          msg: "Fecha Vencimineto es requerido",
+          msg: "Fecha Vencimiento es requerido",
         }
       }
     },
@@ -90,8 +90,14 @@ const articulospanaderia = sequelize.define(
       allowNull: false,
     },
     FechaVencimiento: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha Vencimiento es requerido",
+        }
+      }
     },
     Activo: {
       type: DataTypes.BOOLEAN,
@@ -246,8 +252,14 @@ const articuloslimpieza = sequelize.define(
       allowNull: false,
     },
     FechaEnvasado: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha Envasado es requerido",
+        }
+      }
     },
     Activo: {
       type: DataTypes.BOOLEAN,

@@ -203,7 +203,7 @@ async function CrearTablaArticulosLimpieza() {
           Activo INTEGER
         );`
       );
-      console.log("Tabla articulos limpieza creada!");
+      console.log("Tabla articulos limpiezas creada!");
 
       await db.run(`
         INSERT INTO articuloslimpiezas VALUES

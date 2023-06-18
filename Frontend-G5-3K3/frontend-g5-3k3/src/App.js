@@ -5,6 +5,8 @@ import Menu from "./components/Menu";
 import { Footer } from "./components/Footer";
 import { Inicio } from "./components/Inicio";
 import { ArticulosLacteos } from "./components/articuloslacteos/ArticulosLacteos";
+import { ArticulosPanaderia } from "./components/articulospanaderia/ArticulosPanaderia";
+import { ArticulosLimpieza } from "./components/articuloslimpieza/ArticulosLimpieza.jsx";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             <Routes>
               <Route path="/inicio" element={<Inicio />} />
               <Route path="/articuloslacteos" element={<ArticulosLacteos/>} />
+              <Route path="/articulospanaderia" element={<ArticulosPanaderia/>} />
+              <Route path="/articuloslimpieza" element={<ArticulosLimpieza/>} />
               <Route path="*" element={<Navigate to="/inicio" replace />} />
             </Routes>
           </div>
