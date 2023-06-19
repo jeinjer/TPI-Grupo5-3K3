@@ -271,7 +271,7 @@ const articuloslimpieza = sequelize.define(
           args: true,
           msg: "Fecha Envasado es requerido",
         }
-      }
+    }
     },
     Activo: {
       type: DataTypes.BOOLEAN,

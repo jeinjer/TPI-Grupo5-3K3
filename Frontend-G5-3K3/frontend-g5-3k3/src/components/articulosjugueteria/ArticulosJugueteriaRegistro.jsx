@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-export default function ArticulosCarniceriaRegistro({
+export default function ArticulosJugueteriaRegistro({
   AccionABMC,
   Item,
   Grabar,
@@ -115,25 +115,25 @@ export default function ArticulosCarniceriaRegistro({
             </div>
           </div>
 
-          {/* campo FechaEnvasado */}
+          {/* campo FechaIngreso */}
           <div className="row">
             <div className="col-sm-4 col-md-3 offset-md-1">
-              <label className="col-form-label" htmlFor="FechaEnvasado">
-                Fecha Envasado<span className="text-danger">*</span>:
+              <label className="col-form-label" htmlFor="FechaIngreso">
+                Fecha Ingreso<span className="text-danger">*</span>:
               </label>
             </div>
             <div className="col-sm-8 col-md-6">
               <input
                 type="date"
-                {...register("FechaEnvasado", {
-                  required: { message: "Fecha Envasado es requerido" }
+                {...register("FechaIngreso", {
+                  required: { message: "Fecha Ingreso es requerido" }
                 })}
                 className={
-                  "form-control " + (errors?.FechaEnvasado ? "is-invalid" : "")
+                  "form-control " + (errors?.FechaIngreso ? "is-invalid" : "")
                 }
               />
               <div className="invalid-feedback">
-                {errors?.FechaEnvasado?.message}
+                {errors?.FechaIngreso?.message}
               </div>
             </div>
           </div>

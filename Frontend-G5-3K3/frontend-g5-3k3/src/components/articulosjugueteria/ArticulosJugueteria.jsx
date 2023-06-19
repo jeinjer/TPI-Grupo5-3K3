@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import ArticulosCarniceriaBuscar from "./ArticulosCarniceriaBuscar";
-import ArticulosCarniceriaListado from "./ArticulosCarniceriaListado";
-import ArticulosCarniceriaRegistro from "./ArticulosCarniceriaRegistro";
-import { articuloscarniceriaService } from "../../services/articuloscarniceria.service";
+import ArticulosJugueteriaBuscar from "./ArticulosJugueteriaBuscar";
+import ArticulosJugueteriaListado from "./ArticulosJugueteriaListado";
+import ArticulosJugueteriaRegistro from "./ArticulosJugueteriaRegistro";
+import { articulosjugueteriaService } from "../../services/articulosjugueteria.service";
 
-function ArticulosCarniceria() {
+function ArticulosJugueteria() {
   const TituloAccionABMC = {
     A: "(Agregar)",
     B: "(Eliminar)",
@@ -33,7 +33,7 @@ function ArticulosCarniceria() {
       _pagina = Pagina;
     }
 
-    const data = await articuloscarniceriaService.Buscar(Nombre, Activo, _pagina);
+    const data = await articulosjugueteriaService.Buscar(Nombre, Activo, _pagina);
     setItems(data.Items);
     setRegistrosTotal(data.RegistrosTotal);
 
@@ -46,7 +46,7 @@ function ArticulosCarniceria() {
   }
 
   async function BuscarPorId(item, accionABMC) {
-    const data = await articuloscarniceriaService.BuscarPorId(item);
+    const data = await articulosjugueteriaService.BuscarPorId(item);
     setItem(data);
     setAccionABMC(accionABMC);
   }
@@ -65,11 +65,11 @@ function ArticulosCarniceria() {
   function Agregar() {
     setAccionABMC("A");
     setItem({
-      IdArticuloCarniceria: 0,
+      IdArticuloJugueteria: 0,
       Nombre: null,
       Precio: null,
       Stock: null,
-      FechaEnvasado: moment(new Date()).format("YYYY-MM-DD"),
+      FechaIngreso: moment(new Date()).format("YYYY-MM-DD"),
       Activo: true,
     });
   }
@@ -85,14 +85,14 @@ function ArticulosCarniceria() {
         " el registro?"
     );
     if (resp) {
-      await articuloscarniceriaService.ActivarDesactivar(item);
+      await articulosjugueteriaService.ActivarDesactivar(item);
       await Buscar();
     }
   }
 
   async function Grabar(item) {
     // agregar o modificar
-    await articuloscarniceriaService.Grabar(item);
+    await articulosjugueteriaService.Grabar(item);
     await Buscar();
     Volver();
 
@@ -113,11 +113,11 @@ function ArticulosCarniceria() {
   return (
     <div>
       <div className="tituloPagina">
-        Articulos Carniceria <small>{TituloAccionABMC[AccionABMC]}</small>
+        Articulos Jugueteria <small>{TituloAccionABMC[AccionABMC]}</small>
       </div>
 
       {AccionABMC === "L" && (
-        <ArticulosCarniceriaBuscar
+        <ArticulosJugueteriaBuscar
           Nombre={Nombre}
           setNombre={setNombre}
           Activo={Activo}
@@ -129,7 +129,7 @@ function ArticulosCarniceria() {
 
       {/* Tabla de resutados de busqueda y Paginador */}
       {AccionABMC === "L" && Items?.length > 0 && (
-        <ArticulosCarniceriaListado
+        <ArticulosJugueteriaListado
           {...{
             Items,
             Consultar,
@@ -153,11 +153,11 @@ function ArticulosCarniceria() {
 
       {/* Formulario de alta/modificacion/consulta */}
       {AccionABMC !== "L" && (
-        <ArticulosCarniceriaRegistro
+        <ArticulosJugueteriaRegistro
           {...{ AccionABMC, Item, Grabar, Volver }}
         />
       )}
     </div>
   );
 }
-export { ArticulosCarniceria };
+export { ArticulosJugueteria };

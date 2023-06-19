@@ -8,6 +8,7 @@ import { ArticulosLacteos } from "./components/articuloslacteos/ArticulosLacteos
 import { ArticulosPanaderia } from "./components/articulospanaderia/ArticulosPanaderia";
 import { ArticulosLimpieza } from "./components/articuloslimpieza/ArticulosLimpieza.jsx";
 import { ArticulosCarniceria } from "./components/articuloscarniceria/ArticulosCarniceria.jsx";
+import { ArticulosJugueteria } from "./components/articulosjugueteria/ArticulosJugueteria.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/articulospanaderia" element={<ArticulosPanaderia/>} />
               <Route path="/articuloslimpieza" element={<ArticulosLimpieza/>} />
               <Route path="/articuloscarniceria" element={<ArticulosCarniceria/>} />
+              <Route path="/articulosjugueteria" element={<ArticulosJugueteria/>} />
               <Route path="*" element={<Navigate to="/inicio" replace />} />
             </Routes>
           </div>

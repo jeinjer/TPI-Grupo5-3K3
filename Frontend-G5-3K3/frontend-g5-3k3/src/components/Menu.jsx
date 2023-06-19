@@ -22,29 +22,34 @@ function Menu() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
+            <li className="nav-item custom-nav-item">
               <NavLink className="nav-link" to="/inicio">
                 Inicio
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item custom-nav-item">
               <NavLink className="nav-link" to="/articuloslacteos">
                 Articulos Lacteos
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item custom-nav-item">
               <NavLink className="nav-link" to="/articulospanaderia">
                 Articulos Panaderia
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item custom-nav-item">
               <NavLink className="nav-link" to="/articuloslimpieza">
                 Articulos Limpieza
               </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item custom-nav-item">
               <NavLink className="nav-link" to="/articuloscarniceria">
                 Articulos Carniceria
+              </NavLink>
+            </li>
+            <li className="nav-item custom-nav-item">
+              <NavLink className="nav-link" to="/articulosjugueteria">
+                Articulos Jugueteria
               </NavLink>
             </li>
           </ul>

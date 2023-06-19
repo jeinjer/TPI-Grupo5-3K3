@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../base-orm/sequelize-init')
+const { Op, ValidationError } = require("sequelize");
 router.use(express.json())
 
 router.get("/api/articulosjugueteria", async function (req, res, next) {
@@ -74,9 +75,9 @@ router.put('/api/articulosjugueteria/:id', async (req, res) => {
       });
       if (articuloJugueteria){
         articuloJugueteria.Nombre = Nombre;
-        articuloJugueteria.Nombre = Precio;
-        articuloJugueteria.Nombre = Stock;
-        articuloJugueteria.Nombre = FechaIngreso;
+        articuloJugueteria.Precio = Precio;
+        articuloJugueteria.Stock = Stock;
+        articuloJugueteria.FechaIngreso = FechaIngreso;
         await articuloJugueteria.save();
         res.json({message: 'Articulo de juguetería actualizado'});
       } else {

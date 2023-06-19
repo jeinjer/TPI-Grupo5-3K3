@@ -5,14 +5,14 @@ const articuloCarniceriaAlta = {
   Nombre: "Articulo " + (( ) => (Math.random() + 1).toString(36).substring(2))(),  // Genera un nombre aleatorio
   Precio: 10.5,
   Stock: 11,
-  FechaEnvasado: new Date().toISOString(),
+  FechaEnvasado: '2020-05-25',
 };
 
 const articuloCarniceriaModificacion = {
   Nombre: "Articulo " + (( ) => (Math.random() + 1).toString(36).substring(2))(),  // Genera un nombre aleatorio
   Precio: 10.5,
   Stock: 11,
-  FechaEnvasado: new Date().toISOString(),
+  FechaEnvasado: '2020-06-22',
 };
 
 describe("GET /api/articuloscarniceria", function () {
@@ -22,7 +22,7 @@ describe("GET /api/articuloscarniceria", function () {
       .set("content-type", "application/json");
     expect(res.headers["content-type"]).toEqual("application/json; charset=utf-8");
     expect(res.statusCode).toEqual(200);
-    expect(response.body.Items).toEqual(
+    expect(res.body.Items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           IdArticuloCarniceria: expect.any(Number),
