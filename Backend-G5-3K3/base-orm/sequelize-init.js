@@ -206,8 +206,14 @@ const articuloscarniceria = sequelize.define(
       allowNull: false,
     },
     FechaEnvasado: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notNull: {
+          args: true,
+          msg: "Fecha Envasado es requerido",
+        }
+    }
     },
     Activo: {
       type: DataTypes.BOOLEAN,

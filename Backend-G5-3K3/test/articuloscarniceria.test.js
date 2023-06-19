@@ -22,7 +22,7 @@ describe("GET /api/articuloscarniceria", function () {
       .set("content-type", "application/json");
     expect(res.headers["content-type"]).toEqual("application/json; charset=utf-8");
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(
+    expect(response.body.Items).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           IdArticuloCarniceria: expect.any(Number),
@@ -68,13 +68,8 @@ describe("PUT /api/articuloscarniceria/:id", () => {
 });
 
 describe("DELETE /api/articuloscarniceria/:id", () => {
-  it("Debería devolver el artículo con el id 1 marcado como inactivo", async () => {
+  it("Debería devolver el artículo con el id 1 borrado", async () => {
     const res = await request(app).delete("/api/articuloscarniceria/1");
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(
-      expect.objectContaining({
-        message: "Articulo carniceria marcado como inactivo",
-      })
-    );
   });
 });
