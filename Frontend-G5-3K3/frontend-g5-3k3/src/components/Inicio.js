@@ -22,6 +22,9 @@ function Inicio() {
       <Link to="/articuloslimpieza" className="btn btn-lg btn-primary">
           <i className="fa fa-search"> </i>  Ver Articulos Limpieza
       </Link>
+      <Link to="/articuloscarniceria" className="btn btn-lg btn-primary">
+          <i className="fa fa-search"> </i>  Ver Articulos Carniceria
+      </Link>
 
     </div>
   );

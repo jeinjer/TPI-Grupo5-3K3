@@ -42,6 +42,11 @@ function Menu() {
                 Articulos Limpieza
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/articuloscarniceria">
+                Articulos Carniceria
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>
